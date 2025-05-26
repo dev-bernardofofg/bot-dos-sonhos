@@ -30,7 +30,7 @@ export const ChatMessageBubble = ({ message }: { message: Message }) => {
   return (
     <div
       className={cn(
-        "flex gap-3 max-w-[85%]",
+        "flex gap-3 max-w-full px-2 base:px-0",
         message.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
       )}
     >
@@ -50,14 +50,14 @@ export const ChatMessageBubble = ({ message }: { message: Message }) => {
       </div>
       <div
         className={cn(
-          "relative rounded-2xl px-4 py-3 max-w-full overflow-x-auto",
+          "relative rounded-2xl px-4 py-3 w-full base:max-w-[85%] overflow-x-auto",
           message.role === "user"
             ? "bg-primary text-primary-foreground rounded-br-md"
             : "bg-muted text-muted-foreground rounded-bl-md"
         )}
       >
         {parsed ? (
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2 text-sm break-words">
             <p>
               <strong>🔮 Interpretação:</strong> {parsed.interpretacao}
             </p>
@@ -81,7 +81,7 @@ export const ChatMessageBubble = ({ message }: { message: Message }) => {
             </p>
           </div>
         ) : (
-          <p className="text-sm leading-relaxed whitespace-pre-wrap">
+          <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
             {message.content}
           </p>
         )}

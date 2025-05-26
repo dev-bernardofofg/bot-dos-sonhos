@@ -1,9 +1,14 @@
-// src/components/chat/ChatSidebar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Plus, Trash2 } from "lucide-react";
+import { Menu, MessageSquare, Plus, Trash2 } from "lucide-react";
 import { useChat } from "../(contexts)/chat-context";
 
 export const ChatSidebar = () => {
@@ -28,8 +33,8 @@ export const ChatSidebar = () => {
     return `${days}d`;
   };
 
-  return (
-    <div className="w-80 border-r border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  const SidebarContent = () => (
+    <div className="w-full md:w-80 h-full flex flex-col border-r border-border bg-background">
       <div className="p-4 border-b border-border">
         <Button
           onClick={createConversation}
@@ -48,7 +53,9 @@ export const ChatSidebar = () => {
                 ? "bg-muted text-foreground"
                 : "hover:bg-muted/50 text-muted-foreground"
             )}
-            onClick={() => selectConversation(conversation.id)}
+            onClick={() => {
+              selectConversation(conversation.id);
+            }}
           >
             <div className="flex items-start gap-2">
               <MessageSquare className="w-4 h-4 mt-0.5" />
@@ -74,6 +81,28 @@ export const ChatSidebar = () => {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="relative">
+      <div className="md:hidden p-2">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" className="w-fit">
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-72 md:w-80">
+            <SheetTitle className="hidden" />
+
+            <SidebarContent />
+          </SheetContent>
+        </Sheet>
+      </div>
+      <div className="hidden md:block">
+        <SidebarContent />
       </div>
     </div>
   );
